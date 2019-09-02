@@ -1,0 +1,10 @@
+---
+
+sssd_configure_sudo: True
+
+sssd_conf_sudo:
+  cache_first: "{{ default_sudo_cache_first }}"
+  debug_level: "{{ default_debug_level }}"
+  sudo_threshold: "{{ default_sudo_threshold }}"
+  # sudo_timed: false
+  # sudo_inverse_order: false

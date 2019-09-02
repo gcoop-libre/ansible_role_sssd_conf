@@ -1,0 +1,10 @@
+---
+
+sssd_configure_ssh: false
+
+sssd_conf_ssh:
+  ca_db: "{{ default_ca_db }}"
+  debug_level: "{{ default_debug_level }}"
+  ssh_hash_known_hosts: "{{ default_ssh_hash_known_hosts }}"
+  ssh_known_hosts_timeout: "{{ default_ssh_known_hosts_timeout }}"
+  cache_first: "{{ default_ssh_cache_first }}"

@@ -1,0 +1,8 @@
+---
+
+sssd_configure_session_recording: False
+
+sssd_conf_session_recording:
+#  scope: false
+#  users: false
+#  groups: false

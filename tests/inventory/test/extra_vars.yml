@@ -1,0 +1,12 @@
+---
+ad_domain: example.com
+ad_server: ad1.example.com
+ad_backup_server: ad2.example.com
+
+ipa_domain: "ipa.{{ ad_domain }}"
+ipa_server_fqdn: "ipaserver.{{ ipa_domain }}"
+
+default_domain_suffix: "{{ ad_domain }}"
+domains: "{{ ipa_domain }}"
+
+default_debug_level: 4

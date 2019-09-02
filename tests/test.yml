@@ -1,0 +1,7 @@
+---
+
+- name: Configure SSSD
+  hosts: [all]
+
+  roles:
+    - role: gcoop-libre.sssd_conf

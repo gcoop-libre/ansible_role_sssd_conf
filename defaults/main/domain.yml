@@ -1,0 +1,42 @@
+---
+
+sssd_configure_domain: True
+
+sssd_conf_domain:
+  auto_private_groups: "{{ default_auto_private_groups }}"
+  case_sensitive: "{{ default_case_sensitive }}"
+  debug: "{{ default_debug }}"
+  debug_level: "{{ default_debug_level }}"
+  debug_timestamps: "{{ default_debug_timestamps }}"
+  default_shell: "{{ default_shell }}"
+  dns_discovery_domain: "{{ default_dns_discovery_domain }}"
+  dns_resolver_timeout: 2
+  domain_type: "{{ default_domain_type }}"
+  fallback_homedir: "{{ default_fallback_homedir }}"
+  filter_groups: root
+  filter_users: root
+  full_name_format: "{{ default_full_name_format }}"
+  homedir_substring: "{{ default_homedir_substring }}"
+  ignore_group_members: True
+  krb5_auth_timeout: "{{ default_krb5_auth_timeout }}"
+  krb5_store_password_if_offline: True
+  offline_timeout: "{{ default_offline_timeout }}"
+  override_gid: "{{ default_override_gid }}"
+  override_homedir: "{{ default_override_homedir }}"
+  refresh_expired_interval: "{{ default_refresh_expired_interval }}"
+  subdomain_homedir: "{{ default_subdomain_homedir }}"
+  subdomain_inherit: ldap_user_principal, ignore_group_members, ldap_purge_cache_timeout
+  subdomain_refresh_interval: "{{ default_subdomain_refresh_interval }}"
+  timeout: "{{ default_domain_timeout }}"
+  use_fully_qualified_names: True
+  min_id: 1
+  max_id: 0
+  # command: false
+  # description: false
+  # lookup_family_order: false
+  # override_shell: false
+  # pwd_expiration_warning: false
+  # re_expression: false
+  # realmd_tags: false
+  # store_legacy_passwords: false
+  subdomain_enumerate: false

@@ -1,0 +1,17 @@
+---
+
+sssd_configure_domain_cache: True
+
+sssd_conf_domain_cache:
+  account_cache_expiration: 7
+  cache_credentials: True
+  cache_credentials_minimal_first_factor_length: "{{ default_cache_credentials_minimal_first_factor_length }}"
+  cached_auth_timeout: 7200
+  entry_cache_autofs_timeout: "{{ default_entry_cache_autofs_timeout }}"
+  entry_cache_group_timeout: "{{ default_entry_cache_group_timeout }}"
+  entry_cache_netgroup_timeout: "{{ default_entry_cache_netgroup_timeout }}"
+  entry_cache_service_timeout: "{{ default_entry_cache_service_timeout }}"
+  entry_cache_ssh_host_timeout: "{{ default_entry_cache_ssh_host_timeout }}"
+  entry_cache_sudo_timeout: "{{ default_entry_cache_timeout }}"
+  entry_cache_timeout: "{{ default_entry_cache_timeout }}"
+  entry_cache_user_timeout: "{{ default_entry_cache_user_timeout }}"

@@ -1,0 +1,7 @@
+---
+
+sssd_configure_pac: False
+
+sssd_conf_pac:
+  allowed_uids: "{{ default_allowed_uids }}"
+  pac_lifetime: "{{ default_pac_lifetime }}"

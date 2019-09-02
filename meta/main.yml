@@ -1,0 +1,20 @@
+dependencies: []
+
+galaxy_info:
+  author: Osiris Alejandro Gomez
+  role_name: sssd_conf
+  description: Ansible role for configure SSSD System Security Services Daemon
+  company: gcoop Cooperativa de Software Libre
+  license: GPLv3
+  min_ansible_version: 2.7.1
+  platforms:
+    - name: Ubuntu
+      versions:
+        - bionic
+  galaxy_tags:
+    - ad
+    - freeipa
+    - krb5
+    - ldap
+    - sssd
+    - trust

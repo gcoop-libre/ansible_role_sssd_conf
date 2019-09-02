@@ -1,0 +1,6 @@
+---
+
+sssd_configure_autofs: false
+sssd_conf_autofs:
+  autofs_negative_timeout: false
+  cache_first: "{{ default_autofs_cache_first }}"

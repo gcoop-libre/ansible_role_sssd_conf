@@ -1,0 +1,13 @@
+---
+
+sssd_configure_domain_dyndns: True
+
+sssd_conf_domain_dyndns:
+  dyndns_update: True
+  dyndns_ttl: 3600
+  dyndns_iface: "{{ ansible_default_ipv4.interface }}"
+  dyndns_refresh_interval: 900
+  dyndns_update_ptr: True
+  dyndns_force_tcp: True
+  #dyndns_auth: false
+  #dyndns_server: false

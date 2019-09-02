@@ -1,0 +1,35 @@
+---
+
+- name: Backup current sssd.conf
+  copy:
+    src: /etc/sssd/sssd.conf
+    dest: /etc/sssd/sssd.bak
+    remote_src: yes
+  become: yes
+
+- name: Configure /etc/sssd/sssd.conf
+  template:
+    src: templates/sssd.conf.j2
+    dest: /etc/sssd/sssd.conf
+    owner: root
+    group: root
+    mode: '0600'
+  become: yes
+  when: sssd_configure_sssd_conf
+
+- name: Check /etc/sssd/sssd.conf
+  shell: sssctl config-check
+  become: yes
+  register: sssd_config_check_result
+
+- name: Verify domain status
+  shell: "sssctl domain-status {{ ipa_domain }}"
+  register: sssd_config_domain_status_result
+  become: yes
+
+- name: Restart sssd
+  service:
+    name: sssd
+    pattern: /etc/init.d/sssd
+    state: restarted
+  become: yes

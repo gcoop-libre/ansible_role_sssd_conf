@@ -1,0 +1,160 @@
+{{ ansible_managed | comment }}
+
+{% if sssd_configure_domain and sssd_conf_domain | length > 0 %}
+[domain/{{ ipa_domain }}]
+
+{% for option, value in sssd_conf_domain | dictsort %}
+{% if value is not none %}
+{{ option }} = {{ value |e }}
+{% endif %}
+{% endfor %}
+
+{% if sssd_configure_domain_ipa and sssd_conf_domain_ipa | length > 0 %}
+{% for option, value in sssd_conf_domain_ipa | dictsort %}
+{% if value is not none %}
+{{ option }} = {{ value |e }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if sssd_configure_domain_ad and sssd_conf_domain_ad | length > 0 %}
+{% for option, value in sssd_conf_domain_ad | dictsort %}
+{% if value is not none %}
+{{ option }} = {{ value |e }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if sssd_configure_domain_ldap and sssd_conf_domain_ldap | length > 0 %}
+{% for option, value in sssd_conf_domain_ldap | dictsort %}
+{% if value is not none %}
+{{ option }} = {{ value |e }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if sssd_configure_domain_cache and sssd_conf_domain_cache | length > 0 %}
+{% for option, value in sssd_conf_domain_cache | dictsort %}
+{% if value is not none %}
+{{ option }} = {{ value |e }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if sssd_configure_domain_dyndns and sssd_conf_domain_dyndns | length > 0 %}
+{% for option, value in sssd_conf_domain_dyndns | dictsort %}
+{% if value is not none %}
+{{ option }} = {{ value |e }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% endif %}
+
+{% if sssd_configure_service and sssd_conf_service | length > 0 %}
+[service]
+{% for option, value in sssd_conf_service | dictsort %}
+{% if value is not none %}
+{{ option }} = {{ value |e }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if sssd_configure_sssd and sssd_conf_sssd | length > 0 %}
+[sssd]
+{% for option, value in sssd_conf_sssd | dictsort %}
+{% if value is not none %}
+{{ option }} = {{ value |e }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if sssd_configure_nss and sssd_conf_nss | length > 0 %}
+[nss]
+{% for option, value in sssd_conf_nss | dictsort %}
+{% if value is not none %}
+{{ option }} = {{ value |e }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if sssd_configure_pam and sssd_conf_pam | length > 0 %}
+[pam]
+{% for option, value in sssd_conf_pam | dictsort %}
+{% if value is not none %}
+{{ option }} = {{ value |e }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if sssd_configure_sudo and sssd_conf_sudo | length > 0 %}
+[sudo]
+{% for option, value in sssd_conf_sudo | dictsort %}
+{% if value is not none %}
+{{ option }} = {{ value |e }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if sssd_configure_autofs and sssd_conf_autofs | length > 0 %}
+[autofs]
+{% for option, value in sssd_conf_autofs | dictsort %}
+{% if value is not none %}
+{{ option }} = {{ value |e }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if sssd_configure_ssh and sssd_conf_ssh | length > 0 %}
+[ssh]
+{% for option, value in sssd_conf_ssh | dictsort %}
+{% if value is not none %}
+{{ option }} = {{ value |e }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if sssd_configure_pac and sssd_conf_pac | length > 0 %}
+[pac]
+{% for option, value in sssd_conf_pac | dictsort %}
+{% if value is not none %}
+{{ option }} = {{ value |e }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if sssd_configure_ifp and sssd_conf_ifp | length > 0 %}
+[ifp]
+{% for option, value in sssd_conf_ifp | dictsort %}
+{% if value is not none %}
+{{ option }} = {{ value |e }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if sssd_configure_secrets and sssd_conf_secrets | length > 0 %}
+[secrets]
+{% for option, value in sssd_conf_secrets | dictsort %}
+{% if value is not none %}
+{{ option }} = {{ value |e }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if sssd_configure_session_recording and sssd_conf_session_recording | length > 0 %}
+[session_recording]
+{% for option, value in sssd_conf_session_recording | dictsort %}
+{% if value is not none %}
+{{ option }} = {{ value |e }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if sssd_configure_provider and sssd_conf_provider | length > 0 %}
+[provider]
+{% for option, value in sssd_conf_provider | dictsort %}
+{% if value is not none %}
+{{ option }} = {{ value |e }}
+{% endif %}
+{% endfor %}
+{% endif %}

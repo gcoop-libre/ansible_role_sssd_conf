@@ -1,0 +1,24 @@
+---
+
+sssd_configure_provider: False
+sssd_configure_provider_krb5: False
+
+sssd_conf_provider_krb5:
+  auth_provider: krb5
+  autofs_provider: krb5
+  chpass_provider: krb5
+  hostid_provider: krb5
+  id_provider: krb5
+  krb5_domain: "{{ krb5_domain }}"
+  krb5_hostname: "{{ ansible_fqdn }}"
+  krb5_server: "{{ krb5_server_fqdn }}"
+  selinux_provider: krb5
+  session_provider: krb5
+  subdomains_provider: krb5
+  sudo_provider: krb5
+  access_provider: krb5
+  ad_backup_server: "{{ ad_backup_server }}"
+  ad_domain: "{{ ad_domain }}"
+  ad_gpo_cache_timeout: 60
+  ad_maximum_machine_account_password_age: 7
+  ad_server: "{{ ad_server }}"

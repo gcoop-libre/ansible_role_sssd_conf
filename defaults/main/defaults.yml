@@ -1,0 +1,493 @@
+---
+
+# SSSD supports two representations for specifying the debug level.
+# The simplest is to specify a decimal value from 0-9, which represents
+# enabling that level and all low er-level debug messages.
+# The more comprehensive option is to specify a hexadecimal bitmask to
+# enable or disable specific levels (such as if you wish to suppress a
+# level).
+# Please note that each SSSD service logs into its own log file. Also
+# please note that enabling "debug_level" in the "[sssd]"
+# section only enables debugging just for the sssd process itself,
+# not for the responder or provider processes. The "debug_level"
+# parameter should be added to all sections that you wish to produce
+# debug logs from.
+# In addition to changing the log level in the config file using the
+# "debug_level" parameter, which is persistent, but requires SSSD
+# restart, it is also possible to change the debug level on the fly
+# using the sss_debuglevel(8) tool.
+# Currently supported debug levels:
+# 0, 0x0010: Fatal failures. Anything that would prevent SSSD from
+#            starting up or causes it to cease running.
+# 1, 0x0020: Critical failures. An error that doesn't kill SSSD, but
+#            one that indicates that at least one major feature is not
+#            going to work properly.
+# 2, 0x0040: Serious failures. An error announcing that a particular
+#            request or operation has failed.
+# 3, 0x0080: Minor failures. These are the errors that would percolate
+#            down to cause the operation failure of 2.
+# 4, 0x0100: Configuration settings.
+# 5, 0x0200: Function data.
+# 6, 0x0400: Trace messages for operation functions.
+# 9, 0x4000: Extremely low-level tracing information.
+# To log required bitmask debug levels, simply add their numbers
+# together as shown in following examples:
+# Example: To log fatal failures, critical failures, serious failures
+# and function data use 0x0270.
+# Example: To log fatal failures, configuration settings, function data,
+# trace messages for internal control functions use 0x1310.
+# Note: The bitmask format of debug levels was introduced in 1.7.0.
+#
+# Default: 0
+default_debug_level: 8
+
+# SSSD 1.14 and later also includes the debug alias for debug_level as a
+# convenience feature.
+# If both are specified, the value of debug_level will be used.
+#
+default_debug:
+
+default_shell: /bin/bash
+default_homedir: /home
+
+
+# How many seconds should nss_sss consider entries valid before asking
+# the backend again
+#
+# The cache expiration timestamps are stored as attributes of individual
+# objects in the cache. Therefore, changing the cache timeout only
+# has effect for newly added or expired entries. You should run the
+# sss_cache(8) tool in order to force refresh of entries that have
+# already been cached.
+#
+# Default: 5400
+#
+default_entry_cache_timeout: 28800
+
+# How many seconds should nss_sss consider user entries valid before
+# asking the backend again
+#
+default_entry_cache_user_timeout: "{{ default_entry_cache_timeout }}"
+
+# How many seconds should nss_sss consider service entries valid before
+# asking the backend again
+#
+default_entry_cache_service_timeout: "{{ default_entry_cache_timeout }}"
+
+# How many seconds should the autofs service consider automounter maps
+# valid before asking the backend again
+#
+default_entry_cache_autofs_timeout: "{{ default_entry_cache_timeout }}"
+
+# How many seconds should sudo consider rules valid before asking the
+# backend again
+#
+default_entry_cache_sudo_timeout: "{{ default_entry_cache_timeout }}"
+
+# How many seconds to keep a host ssh key after refresh. IE how long to
+# cache the host key for.
+#
+default_entry_cache_ssh_host_timeout: "{{ default_entry_cache_timeout }}"
+
+# How many seconds should nss_sss consider netgroup entries valid before
+# asking the backend again
+#
+default_entry_cache_netgroup_timeout: "{{ default_entry_cache_timeout }}"
+# 604800
+
+# How many seconds should nss_sss consider group entries valid before
+# asking the backend again
+#
+default_entry_cache_group_timeout: "{{ default_entry_cache_timeout }}"
+
+# Specifies how many seconds SSSD has to wait before triggering a
+# background refresh task which will refresh all expired or nearly
+# expired records. The background refresh will process users, groups and
+# netgroups in the cache. You can consider setting this value to 3/4 *
+# entry_cache_timeout.
+#
+# Default: 0 (disabled)
+#
+default_refresh_expired_interval: 0
+
+# Override the primary GID value with the one specified.
+#
+default_override_gid:
+
+# Specifies whether the domain is meant to be used by POSIX-aware
+# clients such as the Name Service Switch or by applications that do
+# not need POSIX data to be present or generated. Only objects from
+# POSIX domains are available to the operating system interfaces
+# and utilities. Allowed values for this option are "posix" and
+# "application". POSIX domains are reachable by all services.
+# Application domains are only reachable from the InfoPipe responder
+# (see sssd-ifp(5)) and the PAM responder. NOTE: The application
+# domains are currently well tested with "id_provider=ldap" only.
+# For an easy way to configure a non-POSIX domains, please see the
+# "Application domains" section.
+# Default: posix
+#
+default_domain_type: posix
+
+# How often should subdomains list be refreshed
+#
+default_subdomain_refresh_interval: 14400
+
+# Use this homedir as default value for all subdomains within this
+# domain in IPA AD trust. See override_homedir for info about possible
+# values. In addition to those, the expansion below can only be used
+# with subdomain_homedir. %F flat (NetBIOS) name of a subdomain.
+# The value can be overridden by override_homedir option
+# Default: /home/%d/%u
+#
+default_subdomain_homedir: '/home/%d/%u'
+
+# If 2-Factor-Authentication (2FA) is used and credentials should
+# be saved this value determines the minimal length the first
+# authentication factor (long term password) must have to be saved as
+# SHA512 hash into the cache.
+#
+default_cache_credentials_minimal_first_factor_length: 8
+
+# The value of this option will be used in the expansion of the
+# override_homedir option if the template contains the format string %H.
+# An LDAP directory entry can directly contain this template so that
+# this option can be used to expand the home directory path for each
+# client machine (or operating system). It can be set per- domain or
+# globally in the [nss] section. A value specified in a domain section
+# will override one set in the [nss] section.
+# Default: /home
+#
+default_homedir_substring: /home
+
+# If this option is enabled, SSSD will automatically create user private
+# groups based on user's UID number. The GID number is ignored in
+# this case. For POSIX subdomains, setting the option in the main
+# domain is inherited in the subdomain. For ID-mapping subdomains,
+# auto_private_groups is already enabled for the subdomains and setting
+# it to false will not have any effect for the subdomain. NOTE: Because
+# the GID number and the user private group are inferred from the UID
+# number, it is not supported to have multiple entries with the same UID
+# or GID number with this option. In other words, enabling this option
+# enforces uniqueness across the ID space.
+# Default: False
+#
+default_auto_private_groups: false
+
+# Override the user's home directory. You can either provide an absolute
+# value or a template. In the template, the following sequences are
+# substituted:
+# %u login name
+# %U UID number
+# %d domain name
+# %f fully qualified user name (user@domain)
+# example: override_homedir = /home/%u
+# Default: Not set (SSSD will use the value retrieved from LDAP)
+default_override_homedir:
+
+# Set a default template for a user's home directory if one is not
+# specified explicitly by the domain's data provider.
+#
+# The available values for this option are the same as for
+# override_homedir.
+#
+# example: fallback_homedir = /home/%u
+#
+# Default: not set (no substitution for unset home directories)
+default_fallback_homedir:
+
+# Restrict user shell to one of the listed values.
+# The order of evaluation is:
+# 1. If the shell is present in "/etc/shells", it is used.
+# 2. If the shell is in the allowed_shells list but not in
+#    "/etc/shells", use the value of the shell_fallback parameter.
+# 3. If the shell is not in the allowed_shells list and not in
+#    "/etc/shells", a nologin shell is used The wildcard (*) can
+#    be used to allow any shell The (*) is useful if you want to use
+#    shell_fallback in case that user's shell is not in "/etc/shells"
+#    and maintaining list of all allowed.
+# shells in allowed_shells woul d be to much overhead An empty string  .
+# for shell is passed as-is to libc The "/etc/shells" is only read.
+# on SSSD start up, which means that a restart of the SSSD is required .
+# in case a new shell is installed                                     .
+#
+# Default: Not set. The user shell is automatically used.
+#
+default_allowed_shells:
+
+# Treat user and group names as case sensitive. At the moment, this
+# option is not supported in the local provider.
+# Possible option values are:
+# True				Case sensitive. This value is invalid for AD provider
+# False 			Case insensitive                                                     .
+# Preserving	Same as False (case insensitive), but does not lowercase
+# names in the result of NSS operations. Note that name aliases (and
+# in case of services also protocol names) are still lowercased in the
+# output.
+#
+# Default: True (False for AD provider)
+default_case_sensitive: True
+
+# Maximum number of expired rules that can be refreshed at once.
+# If number of expired rules is below threshold, those rules are
+# refreshed with "rules refresh" mechanism.
+# If the threshold is exceeded a "full refresh" of sudo rules is
+# triggered instead.
+# This threshold number also applies to IPA sudo command and command
+# group search.
+#
+# Default: 50
+#
+default_sudo_threshold: 50
+
+# Add a timestamp to the debug messages. If journald is enabled for SSSD
+# debug logging this option is ignored.
+#
+# Default: true
+default_debug_timestamps: True
+
+# Add microseconds to the timestamp in debug messages.
+# If journald is enabled for SSSD debug logging this option is ignored.
+#
+# Default: false
+#
+default_debug_microseconds: False
+
+# Write debug messages to logfiles
+#
+# Default: False
+#
+default_debug_to_files: False
+
+# Options usable in SERVICE and DOMAIN sections
+# Timeout in seconds between heartbeats for this service.
+# This is used to ensure that the process is alive and capable of
+# answering requests.
+# Note that after three missed heartbeats the process will terminate
+# itself.
+#
+# Default: 10
+#
+default_timeout: 10
+default_domain_timeout: "{{ default_timeout }}"
+default_service_timeout: "{{ default_timeout }}"
+
+# Path to a storage of trusted CA certificates.
+# The option is used to validate user certificates before deriving
+# public ssh keys from them.
+#
+# Default: /etc/pki/nssdb
+#
+default_ca_db: '/etc/pki/nssdb'
+
+# Whether or not to hash host names and addresses in the managed
+# known_hosts file.
+#
+# Default: true
+#
+default_ssh_hash_known_hosts: True
+
+# How many seconds to keep a host in the managed known_hosts file after
+# its host keys were requested.
+#
+# Default: 180
+#
+default_ssh_known_hosts_timeout: 180
+
+# With this parameter the certificate verification can be tuned with a
+# comma separated list of options. Supported options are:
+#
+# no_ocsp
+#
+# Disables Online Certificate Status Protocol (OCSP) checks. This might
+# be needed if the OCSP servers defined in the certificate are not
+# reachable from the client.
+#
+# no_verification
+#
+# Disables verification completely. This option should only be used for
+# testing.
+#
+# ocsp_default_responder=URL
+#
+# Sets the OCSP default responder which should be used instead of the
+# one mentioned in the certificate. URL must be replaced with the URL of
+# the OCSP default responder e.g. http://example.com:80/ocsp.
+#
+# This option must be used together with
+# ocsp_default_responder_signing_cert.
+#
+# ocsp_default_responder_signing_cert=NAME
+#
+# The nickname of the cert to trust (expected) to sign the OCSP
+# responses. The certificate with the given nickname must be available
+# in the systems NSS database.
+#
+# This option must be used together with ocsp_default_responder.
+#
+# Unknown options are reported but ignored.
+#
+# Default: not set, i.e. do not restrict certificate verification
+#
+default_certificate_verification:
+
+# A printf(3)-compatible format that describes how to compose a fully
+# qualified name from user name and domain name components.
+#
+# The following expansions are supported:
+#
+# %1$s  user name
+# %2$s  domain name as specified in the SSSD config file.
+# %3$s  domain flat name. Mostly usable for Active Directory domains,
+#       both directly configured or discovered via IPA trusts.
+#
+# Default: “%1$s@%2$s”.
+#
+default_full_name_format: '%1$s'
+
+# Indicates what is the syntax of the config file.
+# SSSD 0.6.0 and later use version 2
+#
+# Default: 2
+#
+default_config_file_version: 2
+
+# Comma separated list of services that are started when sssd itself
+# starts. The services' list is optional on platforms where systemd is
+# supported, as they will either be socket or D-Bus activated when needed.
+#
+# Supported services: nss, pam, sudo, autofs, ssh, pac, ifp
+#
+# By default, all services are disabled and the administrator must
+# enable the ones allowed to be used by executing:
+# "systemctl enable sssd-@service@.socket".
+#
+default_services: 'nss, pam, pac, ifp'
+
+# Lifetime of the PAC entry in seconds. As long as the PAC is valid the
+# PAC data can be used to determine the group memberships of a user.
+#
+# Default: 300
+#
+default_pac_lifetime: 3600
+
+# Specifies the comma-separated list of UID values or user names that
+# are allowed to access the PAC responder. User names are resolved to
+# UIDs at startup.
+#
+# Please note that although the UID 0 is used as the default it will be
+# overwritten with this option. If you still want to allow the root user
+# to access the PAC responder, which would be the typical case, you have
+# to add 0 to the list of allowed UIDs as well.
+#
+# Default: 0 (only the root user is allowed to access the PAC responder)
+#
+default_allowed_uids: 0
+
+# This option specifies whether the responder should query all caches
+# before querying the Data Providers.
+# These options can be used to configure any service
+#
+# Default: false
+#
+default_cache_first: True
+default_autofs_cache_first: "{{ default_cache_first }}"
+default_ifp_cache_first: "{{ default_cache_first }}"
+default_nss_cache_first: "{{ default_cache_first }}"
+default_pac_cache_first: "{{ default_cache_first }}"
+default_pam_cache_first: "{{ default_cache_first }}"
+default_ssh_cache_first: "{{ default_cache_first }}"
+default_sudo_cache_first: "{{ default_cache_first }}"
+
+# Specifies time in seconds for which the list of subdomains will be
+# considered valid.
+#
+# Default: 60
+#
+default_get_domains_timeout: 3600
+
+# How many seconds should nss_sss cache enumerations
+# (requests for info about all users)
+#
+# Default: 120
+#
+default_enum_cache_timeout: 3600
+
+# Specifies for how many seconds nss_sss should keep local users and
+# groups in negative cache before trying to look it up in the backend
+# again. Setting the option to 0 disables this feature.
+#
+# Default: 0
+#
+default_local_negative_timeout: 0
+
+# Specifies for how many seconds nss_sss should cache negative cache
+# hits (that is, queries for invalid database entries, like nonexistent
+# ones) before asking the back end again.
+#
+# Default: 15
+#
+default_entry_negative_timeout: 15
+
+# The entry cache can be set to automatically update entries in
+# the background if they are requested beyond a percentage of the
+# entry_cache_timeout value for the domain.
+#
+# For example, if the domain's entry_cache_timeout is set to 30s and
+# entry_cache_nowait_percentage is set to 50 (percent), entries that
+# come in after 15 seconds past the last cache update will be returned
+# immediately, but the SSSD will go and update the cache on its own,
+# so that future requests will not need to block waiting for a cache
+# update.
+#
+# Valid values for this option are 0-99 and represent a percentage of
+# the entry_cache_timeout for each domain. For performance reasons,
+# this percentage will never reduce the nowait timeout to less than 10
+# seconds. (0 disables this feature)
+#
+# Default: 50
+#
+default_entry_cache_nowait_percentage: 50
+
+# If service discovery is used in the back end, specifies the domain
+# part of the service discovery DNS query.
+#
+# Default: Use the domain part of machine's hostname
+#
+default_dns_discovery_domain: "{{ ipa_domain }}"
+
+# Timeout in seconds after an online authentication request or change
+# password request is aborted. If possible, the authentication request
+# is continued offline.
+#
+# Default: 6
+#
+default_krb5_auth_timeout: 6
+
+# When SSSD switches to offline mode the amount of time before it
+# tries to go back online will increase based upon the time spent
+# disconnected. This value is in seconds and calculated by the
+# following:
+#
+# offline_timeout + random_offset
+#
+# The random offset can increment up to 30 seconds. After each
+# unsuccessful attempt to go online, the new interval is recalculated by
+# the following:
+#
+# new_interval = old_interval*2 + random_offset
+#
+# Note that the maximum length of each interval is currently limited to
+# one hour. If the calculated length of new_interval is greater than an
+# hour, it will be forced to one hour.
+#
+# Default: 60
+#
+default_offline_timeout: 60
+
+# If you want filtered user still be group members set this option to
+# false.
+#
+# Default: true
+#
+filter_users_in_groups: true

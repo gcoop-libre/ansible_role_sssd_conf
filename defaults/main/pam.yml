@@ -1,0 +1,23 @@
+---
+
+sssd_configure_pam: True
+
+sssd_conf_pam:
+  debug_level: "{{ default_debug_level }}"
+  get_domains_timeout: "{{ default_get_domains_timeout }}"
+  offline_credentials_expiration: 7
+  offline_failed_login_attempts: 6
+  offline_failed_login_delay: 5
+  pam_id_timeout: 60
+  # p11_child_timeout: false
+  # pam_account_expired_message: false
+  # pam_account_locked_message: false
+  # pam_app_services: false
+  # pam_cert_auth: false
+  # pam_cert_db_path: false
+  # pam_public_domains: false
+  # pam_pwd_expiration_warning: false
+  # pam_response_filter: false
+  # pam_trusted_users: false
+  # pam_verbosity: false
+  cache_first: "{{ default_pam_cache_first }}"

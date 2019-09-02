@@ -1,0 +1,23 @@
+---
+sssd_service: sssd
+sssd_configure_sssd_conf: True
+sssd_configure_sssd: True
+
+sssd_conf_sssd:
+  certificate_verification: "{{ default_certificate_verification }}"
+  config_file_version: "{{ default_config_file_version }}"
+  debug_level: "{{ default_debug_level }}"
+  full_name_format: "{{ default_full_name_format }}"
+  services: "{{ default_services }}"
+  domains: "{{ ipa_domain }}"
+  default_domain_suffix: "{{ ad_domain }}"
+
+  # enable_files_domain: false
+  # disable_netlink: false
+  # domain_resolution_order: false
+  # try_inotify: false
+  # user: false
+  # krb5_rcache_dir: false
+  # override_space: false
+  # re_expression: false
+  # sbus_timeout: false

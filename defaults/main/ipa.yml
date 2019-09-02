@@ -1,0 +1,4 @@
+---
+
+ipa_domain: "ipa.{{ ad_domain }}"
+ipa_server_fqdn: "ipaserver.{{ ipa_domain }}"

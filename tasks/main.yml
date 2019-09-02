@@ -1,0 +1,6 @@
+---
+
+- include_tasks: apt.yml
+  when: sssd_install_sssd_tools
+
+- include_tasks: sssd.yml

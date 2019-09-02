@@ -1,0 +1,25 @@
+---
+
+sssd_configure_nss: True
+
+sssd_conf_nss:
+  allowed_shells: "{{ default_allowed_shells }}"
+  cache_first: "{{ default_nss_cache_first }}"
+  debug_level: "{{ default_debug_level }}"
+  default_shell: "{{ default_shell }}"
+  entry_cache_nowait_percentage: "{{ default_entry_cache_nowait_percentage }}"
+  entry_negative_timeout: "{{ default_entry_negative_timeout }}"
+  enum_cache_timeout: "{{ default_enum_cache_timeout }}"
+  fallback_homedir: "{{ default_fallback_homedir }}"
+  filter_groups: root
+  filter_users: root
+  filter_users_in_groups: false
+  get_domains_timeout: "{{ default_get_domains_timeout }}"
+  local_negative_timeout: "{{ default_local_negative_timeout }}"
+  memcache_timeout: 3600
+  override_homedir: "{{default_override_homedir }}"
+  override_shell: "{{ default_shell }}"
+  #pwfield: false
+  #shell_fallback: false
+  #user_attributes: false
+  #vetoed_shells: false

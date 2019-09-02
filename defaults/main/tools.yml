@@ -1,0 +1,4 @@
+---
+
+sssd_install_sssd_tools: true
+sssd_tools_packages: sssd-tools

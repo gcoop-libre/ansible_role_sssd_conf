@@ -1,0 +1,8 @@
+---
+
+sssd_configure_ifp: false
+
+sssd_conf_ifp:
+  allowed_uids: "{{ default_allowed_uids }}"
+  user_attributes: false
+  cache_first: "{{ default_ifp_cache_first }}"

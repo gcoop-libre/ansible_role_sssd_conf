@@ -1,0 +1,14 @@
+---
+
+- name: Update APT
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  changed_when: False
+  become: yes
+
+- name: Install sssd-tools
+  apt:
+    name: "{{ sssd_tools_packages }}"
+    state: present
+  become: yes
