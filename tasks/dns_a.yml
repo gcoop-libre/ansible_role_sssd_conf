@@ -1,0 +1,9 @@
+---
+
+- name: "Verify DNS record A for {{ item }}"
+  shell: |
+    set -o pipefail;
+    dig +short A {{ item }}
+  args:
+    executable: /bin/bash
+  changed_when: False

@@ -28,10 +28,13 @@ If you want to configure a FreeIPA with trust Active Directory domain.
   roles:
     - role: gcoop-libre.sssd_conf
       ad_domain: example.com
-      ad_server: ad1.example.com
-      ad_backup_server: ad2.example.com
+      ad_server_list:
+        - "ad1.{{ ad_domain }}"
+      ad_backup_server_list:
+        - "ad2.{{ ad_domain }}"
       ipa_domain: "ipa.{{ ad_domain }}"
-      ipa_server_fqdn: "ipaserver.{{ ipa_domain }}"
+      ipa_server_list:
+        - "ipaserver.{{ ipa_domain }}"
       default_domain_suffix: "{{ ad_domain }}"
       domains: "{{ ipa_domain }}"
       default_debug_level: 4

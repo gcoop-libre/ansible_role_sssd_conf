@@ -2,6 +2,7 @@
 sssd_service: sssd
 sssd_configure_sssd_conf: True
 sssd_configure_sssd: True
+sssd_waiting_after_restart: 30
 
 sssd_conf_sssd:
   certificate_verification: "{{ default_certificate_verification }}"

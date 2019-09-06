@@ -17,8 +17,8 @@ sssd_conf_provider_krb5:
   subdomains_provider: krb5
   sudo_provider: krb5
   access_provider: krb5
-  ad_backup_server: "{{ ad_backup_server }}"
+  ad_backup_server: "{{ ad_backup_server_list | join(',') }}"
   ad_domain: "{{ ad_domain }}"
   ad_gpo_cache_timeout: 60
   ad_maximum_machine_account_password_age: 7
-  ad_server: "{{ ad_server }}"
+  ad_server: "{{ ad_server_list | join(',') }}"

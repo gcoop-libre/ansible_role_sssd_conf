@@ -1,5 +1,9 @@
 ---
 
 ad_domain: example.com
-ad_server: ad1.example.com,ad2.example.com
-ad_backup_server: ad3.example.com,ad4.example.com
+ad_server_list:
+  - ad1.example.com
+  - ad2.example.com
+ad_backup_server_list:
+  - ad3.example.com
+  - ad4.example.com

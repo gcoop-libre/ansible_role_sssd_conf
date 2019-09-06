@@ -1,0 +1,5 @@
+---
+
+# Verify DNS records
+sssd_test_dns: True
+dns_record_a_list: []
