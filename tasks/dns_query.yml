@@ -1,0 +1,119 @@
+---
+
+- name: "Verify DNS record SRV for _kerberos._tcp.{{ ad_domain }}"
+  shell: |
+    set -o pipefail;
+    dig +short SRV _kerberos._tcp.{{ ad_domain }} | awk '{print $4}' | sed 's/.$//g'
+  args:
+    executable: /bin/bash
+  register: dns_record_ad_domain_srv_kerberos_result
+  changed_when: False
+
+- name: "Define dns_record_ad_domain_srv_kerberos_list"
+  set_fact:
+    dns_record_ad_domain_srv_kerberos_list: "{{ dns_record_ad_domain_srv_kerberos_result.stdout_lines | list }}"
+  changed_when: False
+
+- name: "Debug dns_record_ad_domain_srv_kerberos_list"
+  debug:
+    var: dns_record_ad_domain_srv_kerberos_list
+    verbosity: 2
+
+- name: "Verify DNS record SRV for _ldap._tcp.{{ ad_domain }}"
+  shell: |
+    set -o pipefail;
+    dig +short SRV _ldap._tcp.{{ ad_domain }} | awk '{print $4}' | sed 's/.$//g'
+  args:
+    executable: /bin/bash
+  register: dns_record_ad_domain_srv_ldap_result
+  changed_when: False
+
+- name: "Define dns_record_ad_domain_srv_ldap_list"
+  set_fact:
+    dns_record_ad_domain_srv_ldap_list: "{{ dns_record_ad_domain_srv_ldap_result.stdout_lines | list }}"
+  changed_when: False
+
+- name: "Debug dns_record_ad_domain_srv_ldap_list"
+  debug:
+    var: dns_record_ad_domain_srv_ldap_list
+    verbosity: 2
+
+- name: "Verify DNS record SRV for _ldap._tcp.{{ ipa_domain }}"
+  shell: |
+    set -o pipefail;
+    dig +short SRV _ldap._tcp.{{ ipa_domain }} | awk '{print $4}' | sed 's/.$//g'
+  args:
+    executable: /bin/bash
+  register: dns_record_ipa_domain_srv_ldap_result
+  changed_when: False
+
+- name: "Define dns_record_ipa_domain_srv_ldap_list"
+  set_fact:
+    dns_record_ipa_domain_srv_ldap_list: "{{ dns_record_ipa_domain_srv_ldap_result.stdout_lines | list }}"
+  changed_when: False
+
+- name: "Debug dns_record_ipa_domain_srv_ldap_list"
+  debug:
+    var: dns_record_ipa_domain_srv_ldap_list
+    verbosity: 2
+
+- name: "Append ad_server_list to dns_record_a_list"
+  set_fact:
+    dns_record_a_list: "{{ dns_record_a_list + ad_server_list }}"
+  changed_when: False
+  when: ad_server_list | length > 0
+
+- name: "Append ad_backup_server_list to dns_record_a_list"
+  set_fact:
+    dns_record_a_list: "{{ dns_record_a_list + ad_backup_server_list }}"
+  changed_when: False
+  when: ad_backup_server_list | length > 0
+
+- name: "Append dns_record_ad_domain_srv_ldap_list to dns_record_a_list"
+  set_fact:
+    dns_record_a_list: "{{ dns_record_a_list + dns_record_ad_domain_srv_ldap_list }}"
+    changed_when: False
+  when: dns_record_ad_domain_srv_ldap_list | length > 0
+
+- name: "Append dns_record_ad_domain_srv_kerberos_list to dns_record_a_list"
+  set_fact:
+    dns_record_a_list: "{{ dns_record_a_list + dns_record_ad_domain_srv_kerberos_list }}"
+  changed_when: False
+  when: dns_record_ad_domain_srv_kerberos_list | length > 0
+
+- name: "Append ipa_server_list to dns_record_a_list"
+  set_fact:
+    dns_record_a_list: "{{ dns_record_a_list + ipa_server_list }}"
+  changed_when: False
+  when: ipa_server_list | length > 0
+
+- name: "Verify DNS record SRV for _kerberos._tcp.{{ ipa_domain }}"
+  shell: |
+    set -o pipefail;
+    dig +short SRV _kerberos._tcp.{{ ipa_domain }} | awk '{print $4}' | sed 's/.$//g'
+  args:
+    executable: /bin/bash
+  register: dns_record_ipa_domain_srv_kerberos_result
+  changed_when: False
+
+- name: "Define dns_record_ipa_domain_srv_kerberos_list"
+  set_fact:
+    dns_record_ipa_domain_srv_kerberos_list: "{{ dns_record_ipa_domain_srv_kerberos_result.stdout_lines | list }}"
+  changed_when: False
+
+- name: "Debug dns_record_ipa_domain_srv_kerberos_list"
+  debug:
+    var: dns_record_ipa_domain_srv_kerberos_list
+    verbosity: 2
+
+- name: "Unique and sort dns_record_a_list"
+  set_fact:
+    dns_record_a_list: "{{ dns_record_a_list | unique | sort }}"
+  changed_when: False
+  when: dns_record_a_list | length > 0
+
+- name: "Include dns_a.yml"
+  include: dns_a.yml
+  with_items: "{{ dns_record_a_list }}"
+  changed_when: False
+  when: dns_record_a_list | length > 0

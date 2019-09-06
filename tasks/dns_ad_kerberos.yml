@@ -1,0 +1,6 @@
+---
+
+- name: "Verify if {{ item }} in dns_record_ad_domain_srv_kerberos_list"
+  fail:
+    msg: "{{ item }} not defined in DNS kerberos records for domain {{ ad_domain }}"
+  when: item not in dns_record_ad_domain_srv_kerberos_list

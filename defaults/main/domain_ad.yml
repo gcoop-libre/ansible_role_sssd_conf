@@ -2,9 +2,8 @@
 sssd_configure_domain_ad: True
 
 sssd_conf_domain_ad:
-  ad_backup_server: "{{ ad_backup_server }}"
+  ad_backup_server: "{{ ad_backup_server_list | join(',') }}"
   ad_domain: "{{ ad_domain }}"
   ad_gpo_cache_timeout: 60
   ad_maximum_machine_account_password_age: 7
-  ad_server: "{{ ad_server }}"
-
+  ad_server: "{{ ad_server_list | join(',') }}"

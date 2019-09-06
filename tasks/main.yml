@@ -1,5 +1,11 @@
 ---
 
+- include_tasks: dns_query.yml
+  when: sssd_test_dns
+
+- include_tasks: dns_test.yml
+  when: sssd_test_dns
+
 - include_tasks: apt.yml
   when: sssd_install_sssd_tools
 

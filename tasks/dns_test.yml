@@ -1,0 +1,44 @@
+---
+
+- name: "Verify if ad_domain is empty"
+  fail:
+    msg: "ad_domain is not defined"
+  when: (ad_domain is not defined) or (ad_domain | length == 0)
+
+- name: "Verify if ipa_domain is empty"
+  fail:
+    msg: "ipa_domain is not defined"
+  when: (ipa_domain is not defined) or (ipa_domain | length == 0)
+
+- name: "Verify if dns_record_ad_domain_srv_kerberos_list is empty"
+  fail:
+    msg: "DNS not responding any kerberos server for domain {{ ad_domain }}"
+  when: (dns_record_ad_domain_srv_kerberos_list | default([])) | length == 0
+
+- name: "Include dns_ad_kerberos.yml"
+  include: dns_ad_kerberos.yml
+  with_items: "{{ ad_server_list }}"
+  changed_when: False
+  when: ad_server_list | length > 0
+
+- name: "Verify if dns_record_ad_domain_srv_ldap_list is empty"
+  fail:
+    msg: "DNS not responding any ldap server for domain {{ ad_domain }}"
+  when: (dns_record_ad_domain_srv_ldap_list | default([])) | length == 0
+
+- name: "Verify if dns_record_ad_domain_srv_ldap_list is empty"
+  fail:
+    msg: "{{ item }} not defined in DNS ldap records for domain {{ ad_domain }}"
+  when: item not in dns_record_ad_domain_srv_ldap_list
+  with_items: "{{ ad_server_list }}"
+
+- name: "Verify if dns_record_ipa_domain_srv_kerberos_list is empty"
+  fail:
+    msg: "DNS not responding any kerberos server for domain {{ ipa_domain }}"
+  when: (dns_record_ipa_domain_srv_kerberos_list | default([])) | length == 0
+
+- name: "Verify if dns_record_ipa_domain_srv_kerberos_list is empty"
+  fail:
+    msg: "{{ item }} not defined in DNS kerberos records for domain {{ ipa_domain }}"
+  when: item not in dns_record_ipa_domain_srv_kerberos_list
+  with_items: "{{ ipa_server_list }}"

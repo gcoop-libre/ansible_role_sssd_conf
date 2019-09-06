@@ -10,7 +10,7 @@ sssd_conf_domain_ipa:
   subdomains_provider: ipa
   ipa_domain: "{{ ipa_domain }}"
   ipa_hostname: "{{ ansible_fqdn }}"
-  ipa_server: "{{ ipa_server_fqdn }}"
+  ipa_server: "{{ ipa_server_list | join(',') }}"
   #autofs_provider: ipa
   #hostid_provider: ipa
   #selinux_provider: ipa
