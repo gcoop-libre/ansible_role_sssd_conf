@@ -1,0 +1,14 @@
+---
+
+sssd_configure_kerberos: True
+
+sssd_conf_kerberos_libdefaults:
+  default_realm: "{{ kerberos_default_realm }}"
+  dns_lookup_realm: "{{ kerberos_dns_lookup_realm }}"
+  dns_lookup_kdc: "{{ kerberos_dns_lookup_kdc }}"
+  rdns: "{{ kerberos_rdns }}"
+  dns_canonicalize_hostname: "{{ kerberos_dns_canonicalize_hostname }}"
+  ticket_lifetime: "{{ kerberos_ticket_lifetime }}"
+  renew_lifetime: "{{ kerberos_renew_lifetime }}"
+  forwardable: "{{ kerberos_forwardable }}"
+  udp_preference_limit: "{{ kerberos_udp_preference_limit }}"

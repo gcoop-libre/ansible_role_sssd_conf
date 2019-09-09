@@ -9,4 +9,7 @@
 - include_tasks: apt.yml
   when: sssd_install_sssd_tools
 
+- include_tasks: kerberos.yml
+  when: sssd_configure_kerberos
+
 - include_tasks: sssd.yml

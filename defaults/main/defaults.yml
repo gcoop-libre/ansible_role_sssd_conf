@@ -491,3 +491,36 @@ default_offline_timeout: 60
 # Default: true
 #
 filter_users_in_groups: true
+
+kerberos_ad_realm: "{{ ad_domain | upper }}"
+kerberos_ipa_realm: "{{ ipa_domain | upper }}"
+
+kerberos_default_realm: "{{ kerberos_ipa_realm }}"
+kerberos_dns_canonicalize_hostname: False
+kerberos_dns_lookup_kdc: False
+kerberos_dns_lookup_realm: False
+
+# If this flag is set, initial tickets by default will be forwardable.
+# The default value for this flag is false.
+#
+kerberos_forwardable: True
+kerberos_rdns: False
+
+# The value of this tag is the default renewable lifetime for initial
+# tickets.
+# The default value for the tag is 0.
+#
+kerberos_renew_lifetime: 7d
+
+# The value of this tag is the default lifetime for initial tickets.
+# The default value for the tag is 1 day (1d).
+#
+kerberos_ticket_lifetime: 24h
+
+# When sending a message to the KDC, the library will try using TCP
+# before UDP if the size of the message is above "udp_preference_limit".
+# If the message is smaller than "udp_preference_limit", then UDP will
+# be tried before TCP. Regardless of the size, both protocols will be
+# tried if the first attempt fails.
+#
+kerberos_udp_preference_limit: 0

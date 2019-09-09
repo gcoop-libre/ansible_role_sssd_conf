@@ -1,0 +1,52 @@
+{{ ansible_managed | comment }}
+
+includedir /etc/krb5.conf.d/
+includedir /var/lib/sss/pubconf/krb5.include.d/
+
+[libdefaults]
+  default_ccache_name = KEYRING:persistent:%{uid}
+{% if sssd_configure_kerberos and sssd_conf_kerberos_libdefaults | length > 0 %}
+{% for option, value in sssd_conf_kerberos_libdefaults | dictsort %}
+{% if value is not none %}
+  {{ option }} = {{ value |e }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+[realms]
+  {{ kerberos_ipa_realm }} = {
+    pkinit_anchors = FILE:/var/lib/ipa-client/pki/kdc-ca-bundle.pem
+    pkinit_pool = FILE:/var/lib/ipa-client/pki/ca-bundle.pem
+
+{% if ipa_server_list | length > 0 %}
+{% for value in ipa_server_list %}
+    kdc = {{ value }}
+{% endfor %}
+
+    admin_server = {{ ipa_server_list | first }}
+    master_kdc = {{ ipa_server_list | first }}
+    default_domain = {{ ipa_domain }}
+{% endif %}
+  }
+  {{ kerberos_ad_realm }} = {
+{% if ad_server_list | length > 0 %}
+{% for value in ad_server_list %}
+    kdc = {{ value |e }}
+{% endfor %}
+{% if ad_backup_server_list | length > 0 %}
+{% for value in ad_backup_server_list %}
+    kdc = {{ value |e }}
+{% endfor %}
+{% endif %}
+    admin_server = {{ ad_server_list | first }}
+    master_kdc = {{ ad_server_list | first }}
+    default_domain = {{ ad_domain }}
+{% endif %}
+  }
+
+
+[domain_realm]
+  .{{ ipa_domain }} = {{ kerberos_ipa_realm }}
+  {{ ipa_domain }} = {{ kerberos_ipa_realm }}
+  {{ ansible_fqdn }} = {{ kerberos_ipa_realm }}
+
