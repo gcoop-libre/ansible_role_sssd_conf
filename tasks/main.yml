@@ -12,4 +12,7 @@
 - include_tasks: kerberos.yml
   when: sssd_configure_kerberos
 
+- include_tasks: ldap.yml
+  when: sssd_configure_ldap
+
 - include_tasks: sssd.yml

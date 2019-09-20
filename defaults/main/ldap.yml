@@ -1,3 +1,7 @@
 ---
 
-ldap_tls_cacert: '/etc/ipa/ca.crt'
+sssd_configure_ldap: True
+
+ldap_base: dc=
+ldap_protocol: ldaps
+ldap_tls_cacert: /etc/ssl/certs/ca-certificates.crt
