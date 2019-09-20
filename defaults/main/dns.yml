@@ -2,4 +2,9 @@
 
 # Verify DNS records
 sssd_test_dns: True
+
+# Used for merge all 'A' DNS Records for query in single task
 dns_record_a_list: []
+
+# Remove AD and IPA servers entries in /etc/hosts
+remove_servers_from_etc_hosts: True

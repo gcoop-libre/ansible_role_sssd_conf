@@ -1,0 +1,32 @@
+---
+
+- name: "Get {{ ldap_tls_cacert }} status"
+  stat:
+    path: "{{ ldap_tls_cacert }}"
+  register: ldap_tls_cacert_stat
+  changed_when: False
+
+- name: "Verify if {{ ldap_tls_cacert }} exists"
+  fail:
+    msg: "{{ ldap_tls_cacert }} don't exists"
+  when: not ldap_tls_cacert_stat.stat.isreg
+
+- name: Define ldap_uri
+  set_fact:
+    ldap_uri: "{{ ldap_protocol }}://{{ ipa_domain }}"
+  changed_when: False
+
+- name: Define ldap_base
+  set_fact:
+    ldap_base: "{{ ldap_base + ipa_domain.split('.') | join(',dc=') }}"
+  changed_when: False
+
+- name: Configure /etc/ldap/ldap.conf
+  template:
+    src: templates/ldap.conf.j2
+    dest: /etc/ldap/ldap.conf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+  become: yes

@@ -1,0 +1,26 @@
+{{ ansible_managed | comment }}
+
+#
+# LDAP Defaults
+#
+
+# See ldap.conf(5) for details
+# This file should be world readable but not world writable.
+
+#BASE	dc=example,dc=com
+#URI	ldap://ldap.example.com ldap://ldap-master.example.com:666
+
+#SIZELIMIT	12
+#TIMELIMIT	15
+#DEREF		never
+
+# TLS certificates (needed for GnuTLS)
+{% if ldap_tls_cacert and ldap_tls_cacert | length > 0 %}
+TLS_CACERT	{{ ldap_tls_cacert }}
+{% endif %}
+{% if ldap_uri and ldap_uri | length > 0 %}
+URI {{ ldap_uri }}
+{% endif %}
+{% if ldap_base and ldap_base | length > 0 %}
+BASE {{ ldap_base }}
+{% endif %}

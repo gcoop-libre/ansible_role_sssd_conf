@@ -1,0 +1,8 @@
+---
+
+- name: Remove {{ item }} from /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    state: absent
+    regexp: '.*{{ item }}$'
+  become: yes

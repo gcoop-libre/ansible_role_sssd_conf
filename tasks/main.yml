@@ -1,5 +1,8 @@
 ---
 
+- include_tasks: dns_hosts.yml
+  when: remove_servers_from_etc_hosts
+
 - include_tasks: dns_query.yml
   when: sssd_test_dns
 
@@ -11,5 +14,11 @@
 
 - include_tasks: kerberos.yml
   when: sssd_configure_kerberos
+
+- include_tasks: ldap.yml
+  when: sssd_configure_ldap
+
+- include_tasks: ipa.yml
+  when: sssd_configure_ipa
 
 - include_tasks: sssd.yml
