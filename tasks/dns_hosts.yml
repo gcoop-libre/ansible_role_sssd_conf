@@ -1,0 +1,7 @@
+---
+
+- name: Ensure don't exists AD and IPA servers entries in /etc/hosts
+  include_tasks: etc_hosts.yml
+  with_items:
+    - "{{ ad_server_list }}"
+    - "{{ ipa_server_list }}"
