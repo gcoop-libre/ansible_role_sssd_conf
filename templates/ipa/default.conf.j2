@@ -1,0 +1,12 @@
+{{ ansible_managed | comment }}
+
+[global]
+{% if ldap_base and ldap_base | length > 0 %}
+basedn = {{ ldap_base }}
+{% endif %}
+realm = {{ ipa_realm }}
+domain = {{ ipa_domain }}
+server = {{ ipa_server_list | first }}
+host = {{ ansible_fqdn }}
+xmlrpc_uri = https://{{ ipa_server_list | first }}/ipa/xml
+enable_ra = True

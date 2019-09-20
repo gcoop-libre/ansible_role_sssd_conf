@@ -1,0 +1,11 @@
+---
+
+- name: Configure /etc/ipa/default.conf
+  template:
+    src: templates/ipa/default.conf.j2
+    dest: /etc/ipa/default.conf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+  become: yes

@@ -2,3 +2,5 @@
 
 ipa_server_list:
   - "ipaserver.{{ ipa_domain }}"
+  
+sssd_configure_ipa: True
