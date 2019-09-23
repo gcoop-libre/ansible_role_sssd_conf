@@ -4,7 +4,7 @@
 {% if ldap_base and ldap_base | length > 0 %}
 basedn = {{ ldap_base }}
 {% endif %}
-realm = {{ ipa_realm }}
+realm = {{ kerberos_ipa_realm }}
 domain = {{ ipa_domain }}
 server = {{ ipa_server_list | first }}
 host = {{ ansible_fqdn }}
