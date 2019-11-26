@@ -524,3 +524,10 @@ kerberos_ticket_lifetime: 24h
 # tried if the first attempt fails.
 #
 kerberos_udp_preference_limit: 0
+
+# Number of times services should attempt to reconnect in the event of a
+# Data Provider crash or restart before they give up
+#
+# Default: 3
+#
+default_reconnection_retries: 3
