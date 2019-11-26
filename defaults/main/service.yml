@@ -10,7 +10,7 @@ sssd_conf_service:
   debug_microseconds: "{{ default_debug_microseconds }}"
   debug_to_files: "{{ default_debug_to_files }}"
   command: false
-  reconnection_retries: false
+  reconnection_retries: "{{ default_reconnection_retries }}"
   fd_limit: false
   client_idle_timeout: false
   responder_idle_timeout: false
