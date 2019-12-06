@@ -13,3 +13,7 @@ default_domain_suffix: "{{ ad_domain }}"
 domains: "{{ ipa_domain }}"
 
 default_debug_level: 4
+
+dyndns_update: False
+dyndns_update_ptr: False
+dyndns_force_tcp: False
