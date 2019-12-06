@@ -12,8 +12,7 @@ sssd_conf_sssd:
   services: "{{ default_services }}"
   domains: "{{ ipa_domain }}"
   default_domain_suffix: "{{ ad_domain }}"
-
-  # enable_files_domain: false
+  enable_files_domain: "{{ enable_files_domain }}"
   # disable_netlink: false
   # domain_resolution_order: false
   # try_inotify: false

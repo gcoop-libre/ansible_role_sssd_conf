@@ -13,8 +13,8 @@ sssd_conf_domain:
   dns_resolver_timeout: 2
   domain_type: "{{ default_domain_type }}"
   fallback_homedir: "{{ default_fallback_homedir }}"
-  filter_groups: root
-  filter_users: root
+  filter_groups: "{{ filter_groups }}"
+  filter_users: "{{ filter_users }}"
   full_name_format: "{{ default_full_name_format }}"
   homedir_substring: "{{ default_homedir_substring }}"
   ignore_group_members: True
@@ -33,7 +33,7 @@ sssd_conf_domain:
   max_id: 0
   # command: false
   # description: false
-  # lookup_family_order: false
+  lookup_family_order: "{{ lookup_family_order }}"
   # override_shell: false
   # pwd_expiration_warning: false
   # re_expression: false

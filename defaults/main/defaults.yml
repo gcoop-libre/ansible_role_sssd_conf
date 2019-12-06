@@ -218,9 +218,9 @@ default_allowed_shells:
 # Treat user and group names as case sensitive. At the moment, this
 # option is not supported in the local provider.
 # Possible option values are:
-# True				Case sensitive. This value is invalid for AD provider
-# False 			Case insensitive                                                     .
-# Preserving	Same as False (case insensitive), but does not lowercase
+# True        Case sensitive. This value is invalid for AD provider
+# False       Case insensitive                                                     .
+# Preserving  Same as False (case insensitive), but does not lowercase
 # names in the result of NSS operations. Note that name aliases (and
 # in case of services also protocol names) are still lowercased in the
 # output.
@@ -485,6 +485,21 @@ default_krb5_auth_timeout: 6
 #
 default_offline_timeout: 60
 
+# Exclude certain users or groups from being fetched from the sss NSS
+# database. This is particularly useful for system accounts. This option
+# can also be set per-domain or include fully-qualified names to filter
+# only users from the particular domain.
+#
+# NOTE: The filter_groups option doesn't affect inheritance of nested
+# group members, since filtering happens after they are propagated for
+# returning via NSS. E.g. a group having a member group filtered out
+# will still have the member users of the latter listed.
+#
+# Default: root
+#
+filter_users: root
+filter_groups: root
+
 # If you want filtered user still be group members set this option to
 # false.
 #
@@ -531,3 +546,92 @@ kerberos_udp_preference_limit: 0
 # Default: 3
 #
 default_reconnection_retries: 3
+
+# Provides the ability to select preferred address family to use when
+# performing DNS lookups.
+#
+# Supported values:
+#
+# ipv4_first: Try looking up IPv4 address, if that fails, try IPv6
+# ipv4_only: Only attempt to resolve hostnames to IPv4 addresses.
+# ipv6_first: Try looking up IPv6 address, if that fails, try IPv4
+# ipv6_only: Only attempt to resolve hostnames to IPv6 addresses.
+#
+# Default: ipv4_first
+#
+lookup_family_order: ipv4_only
+
+# When this option is enabled, SSSD prepends an implicit domain with
+# "id_provider=files" before any explicitly configured domains.
+#
+# Default: false
+#
+enable_files_domain: False
+
+# Optional. This option tells SSSD to automatically update the Active
+# Directory DNS server with the IP address of this client. The update
+# is secured using GSS-TSIG. As a consequence, the Active Directory
+# administrator only needs to allow secure updates for the DNS zone.
+# The IP address of the AD LDAP connection is used for the updates, if
+# it is not otherwise specified by using the "dyndns_iface" option.
+#
+# NOTE: On older systems (such as RHEL 5), for this behavior to
+# work reliably, the default Kerberos realm must be set properly in
+# /etc/krb5.conf
+#
+# Default: true
+#
+dyndns_update: True
+
+# The TTL to apply to the client DNS record when updating it.
+# If dyndns_update is false this has no effect. This will override the
+# TTL serverside if set by an administrator.
+#
+# Default: 3600 (seconds)
+#
+dyndns_ttl: 3600
+
+# How often should the back end perform periodic DNS update in addition
+# to the automatic update performed when the back end goes online.
+# This option is optional and applicable only when dyndns_update is
+# true. Note that the lowest possible value is 60 seconds in-case if
+# value is provided less than 60, parameter will assume lowest value
+# only.
+#
+# Default: 86400 (24 hours)
+#
+dyndns_refresh_interval: 86400
+
+# Whether the PTR record should also be explicitly updated when updating
+# the client's DNS records. Applicable only when dyndns_update is true.
+#
+# Default: True
+#
+dyndns_update_ptr: True
+
+# Whether the nsupdate utility should default to using TCP for
+# communicating with the DNS server.
+#
+# Default: False (let nsupdate choose the protocol)
+#
+dyndns_force_tcp: False
+
+
+# Whether the nsupdate utility should use GSS-TSIG authentication for
+# secure updates with the DNS server, insecure updates can be sent by
+# setting this option to 'none'.
+#
+# Default: GSS-TSIG
+#
+dyndns_auth: GSS-TSIG
+
+# The DNS server to use when performing a DNS update. In most setups,  .
+# it's recommended to leave this option unset Setting this option      .
+# makes sense for environments where the DNS server is different       .
+# from the identity server Please note that this option will be only   .
+# used in fallback attempt when previous attempt using autodetected    .
+# settings failed                                                      .
+#
+# Default: None (let nsupdate choose the server)
+#
+dyndns_server:

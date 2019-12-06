@@ -11,8 +11,8 @@ sssd_conf_nss:
   entry_negative_timeout: "{{ default_entry_negative_timeout }}"
   enum_cache_timeout: "{{ default_enum_cache_timeout }}"
   fallback_homedir: "{{ default_fallback_homedir }}"
-  filter_groups: root
-  filter_users: root
+  filter_groups: "{{ filter_groups }}"
+  filter_users: "{{ filter_users }}"
   filter_users_in_groups: false
   get_domains_timeout: "{{ default_get_domains_timeout }}"
   local_negative_timeout: "{{ default_local_negative_timeout }}"
