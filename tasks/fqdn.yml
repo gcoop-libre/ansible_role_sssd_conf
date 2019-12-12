@@ -1,0 +1,6 @@
+---
+
+- name: Fail if ansible_fqdn returns localhost.localdomain
+  fail:
+    msg: 'Possible bad /etc/hosts definition: ansible_fqdn is returning localhost.localdomain'
+  when: ansible_fqdn == 'localhost.localdomain'
