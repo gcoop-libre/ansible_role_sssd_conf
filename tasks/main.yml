@@ -1,5 +1,7 @@
 ---
 
+- include_tasks: fqdn.yml
+
 - include_tasks: dns_hosts.yml
   when: remove_servers_from_etc_hosts
 
