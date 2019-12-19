@@ -23,10 +23,50 @@
     verbosity: 2
   changed_when: False
 
-- name: Restart sssd
+- name: Fail when sssd config check failed
+  fail:
+  when: sssd_config_check_result.failed
+
+- name: Invalidate all cached entries
+  command: sss_cache -E
+  become: yes
+  when: sssd_invalidate_all_cached_entries
+
+- name: Stop sssd
   service:
     name: sssd
-    state: restarted
+    state: stopped
+  become: yes
+
+- name: Backup sssd cache
+  archive:
+    path: /var/lib/sss/db
+    dest: "{{ backup_var_lib_sssd_db_dest }}"
+    format: "{{ backup_var_lib_sssd_db_format }}"
+  become: yes
+  when: sssd_backup_var_lib_sssd_db
+
+- name: Delete sssd cache directory
+  file:
+    state: absent
+    path: /var/lib/sss/db
+  become: yes
+  when: sssd_delete_sssd_db_cache
+
+- name: Create sssd cache directory
+  file:
+    state: directory
+    path: /var/lib/sss/db
+    owner: sssd
+    group: sssd
+    mode: '0600'
+  become: yes
+  when: sssd_delete_sssd_db_cache
+
+- name: Start sssd
+  service:
+    name: sssd
+    state: started
   become: yes
   when: not sssd_config_check_result.failed
 
