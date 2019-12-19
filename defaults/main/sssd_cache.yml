@@ -1,0 +1,9 @@
+---
+
+sssd_invalidate_all_cached_entries: False
+sssd_delete_sssd_db_cache: True
+
+sssd_backup_var_lib_sssd_db: True
+backup_var_lib_sssd_db_dest: "{{ '/root/sssd-db-%s.tar' | strftime }}"
+backup_var_lib_sssd_db_format: tar
+
