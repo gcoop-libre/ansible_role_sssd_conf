@@ -635,3 +635,10 @@ dyndns_auth: GSS-TSIG
 # Default: None (let nsupdate choose the server)
 #
 dyndns_server:
+
+# Specifies how many seconds SSSD has to wait before refreshing its
+# cache of enumerated records.
+#
+# Default: 300
+#
+ldap_enumeration_refresh_timeout: 3600
