@@ -10,7 +10,7 @@ sssd_conf_domain:
   debug_timestamps: "{{ default_debug_timestamps }}"
   default_shell: "{{ default_shell }}"
   dns_discovery_domain: "{{ default_dns_discovery_domain }}"
-  dns_resolver_timeout: 2
+  dns_resolver_timeout: "{{ dns_resolver_timeout }}"
   domain_type: "{{ default_domain_type }}"
   fallback_homedir: "{{ default_fallback_homedir }}"
   filter_groups: "{{ filter_groups }}"
