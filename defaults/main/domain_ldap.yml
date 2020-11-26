@@ -13,3 +13,4 @@ sssd_conf_domain_ldap:
   ldap_tls_cacert: "{{ ldap_tls_cacert }}"
   ldap_use_tokengroups: True
   ldap_user_principal: nosuchattr
+  ldap_enumeration_refresh_timeout: "{{ ldap_enumeration_refresh_timeout }}"
