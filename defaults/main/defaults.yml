@@ -642,3 +642,11 @@ dyndns_server:
 # Default: 300
 #
 ldap_enumeration_refresh_timeout: 3600
+
+# How long would SSSD try to resolve a failover service. This service
+# resolution internally might include several steps, such as resolving
+# DNS SRV queries or locating the site.
+#
+# Default: 6
+#
+dns_resolver_timeout: 6
